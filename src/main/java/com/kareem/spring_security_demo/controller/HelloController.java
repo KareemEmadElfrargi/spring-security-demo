@@ -1,4 +1,4 @@
-package com.kareem.spring_security_demo;
+package com.kareem.spring_security_demo.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;

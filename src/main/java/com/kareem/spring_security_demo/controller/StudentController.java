@@ -1,6 +1,7 @@
-package com.kareem.spring_security_demo;
+package com.kareem.spring_security_demo.controller;
 
 
+import com.kareem.spring_security_demo.model.Student;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;

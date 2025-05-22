@@ -1,5 +1,6 @@
 package com.kareem.spring_security_demo.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,14 +15,24 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration // Marks this class as a configuration class for Spring
 @EnableWebSecurity // Enables Spring Security for the application
 public class SecurityConfig {
+    @Autowired
+    private UserDetailsService userDetailsService;
 
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
 
+        return provider;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -51,22 +62,4 @@ public class SecurityConfig {
         //endregion
     }
 
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        UserDetails user = User
-                .withDefaultPasswordEncoder()
-                .username("user")
-                .password("k@123")
-                .roles("USER")
-                .build();
-
-        UserDetails admin = User
-                .withDefaultPasswordEncoder()
-                .username("admin")
-                .password("k@123")
-                .roles("ADMIN")
-                .build();
-        return new InMemoryUserDetailsManager(user,admin);
-    }
 }
