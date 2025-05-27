@@ -34,6 +34,7 @@ public class StudentController {
 
     @PostMapping("/students")
     public void addStudent(@RequestBody Student student) {
+        System.out.println("Adding student: " + student.getName());
         students.add(student);
     }
 }

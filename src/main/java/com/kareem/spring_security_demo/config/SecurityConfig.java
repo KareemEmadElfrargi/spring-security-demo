@@ -23,8 +23,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration // Marks this class as a configuration class for Spring
 @EnableWebSecurity // Enables Spring Security for the application
 public class SecurityConfig {
-    @Autowired
-    private UserDetailsService userDetailsService;
+
+    private final UserDetailsService userDetailsService;
+
+    public SecurityConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
